@@ -1,0 +1,131 @@
+C:\Program Files\PostgreSQL\17\pgAdmin 4\runtime>"C:\Program Files\PostgreSQL\17\pgAdmin 4\runtime\psql.e
+xe" "host=localhost port=5432 dbname=postgres user=postgres sslmode=prefer connect_timeout=10" 2>>&1
+psql (17.6)
+WARNING: Console code page (866) differs from Windows code page (1251)
+         8-bit characters might not work correctly. See psql reference
+         page "Notes for Windows users" for details.
+Type "help" for help.
+
+postgres=# \l
+                                                             List of databases
+   Name    |  Owner   | Encoding | Locale Provider |       Collate       |        Ctype        | Locale |
+ ICU Rules |   Access privileges
+-----------+----------+----------+-----------------+---------------------+---------------------+--------+
+-----------+-----------------------
+ labdb     | postgres | UTF8     | libc            | Russian_Russia.1251 | Russian_Russia.1251 |        |
+           |
+ mydb      | postgres | UTF8     | libc            | Russian_Russia.1251 | Russian_Russia.1251 |        |
+           |
+ postgres  | postgres | UTF8     | libc            | Russian_Russia.1251 | Russian_Russia.1251 |        |
+           |
+ template0 | postgres | UTF8     | libc            | Russian_Russia.1251 | Russian_Russia.1251 |        |
+           | =c/postgres          +
+           |          |          |                 |                     |                     |        |
+           | postgres=CTc/postgres
+ template1 | postgres | UTF8     | libc            | Russian_Russia.1251 | Russian_Russia.1251 |        |
+           | =c/postgres          +
+           |          |          |                 |                     |                     |        |
+           | postgres=CTc/postgres
+(5 rows)
+
+
+postgres=# CREATE TABLE students (
+postgres(#     student_id SERIAL PRIMARY KEY,
+postgres(#     first_name VARCHAR(50) NOT NULL,
+postgres(#     last_name VARCHAR(50) NOT NULL,
+postgres(#     email VARCHAR(100) UNIQUE NOT NULL,
+postgres(#     faculty VARCHAR(100)
+postgres(# );
+CREATE TABLE
+postgres=# \d students
+                                          Table "public.students"
+   Column   |          Type          | Collation | Nullable |                   Default
+
+------------+------------------------+-----------+----------+--------------------------------------------
+--
+ student_id | integer                |           | not null | nextval('students_student_id_seq'::regclass
+)
+ first_name | character varying(50)  |           | not null |
+ last_name  | character varying(50)  |           | not null |
+ email      | character varying(100) |           | not null |
+ faculty    | character varying(100) |           |          |
+Indexes:
+    "students_pkey" PRIMARY KEY, btree (student_id)
+    "students_email_key" UNIQUE CONSTRAINT, btree (email)
+
+
+postgres=# INSERT INTO students (first_name, last_name, email, faculty)
+postgres-# VALUES
+postgres-#     ('Alymbek', 'Toktorov', 'alymbek@example.com', 'COM-25'),
+postgres-#     ('Timur', 'Isakov', 'timur@example.com', 'MED'),
+postgres-#     ('Beka', 'Sadykov', 'beka@example.com', 'MAT');
+INSERT 0 3
+postgres=# SELECT * FROM students;
+ student_id | first_name | last_name |        email        | faculty
+------------+------------+-----------+---------------------+---------
+          1 | Alymbek    | Toktorov  | alymbek@example.com | COM-25
+          2 | Timur      | Isakov    | timur@example.com   | MED
+          3 | Beka       | Sadykov   | beka@example.com    | MAT
+(3 rows)
+
+
+postgres=# DROP TABLE students;
+DROP TABLE
+postgres=# DROP TABLE IF EXISTS students;
+ЗАМЕЧАНИЕ:  таблица "students" не существует, пропускается
+DROP TABLE
+postgres=# ALTER TABLE students ADD COLUMN birth_date DATE;
+ОШИБКА:  отношение "students" не существует
+postgres=# CREATE TABLE students (
+postgres(#     student_id SERIAL PRIMARY KEY,
+postgres(#     first_name VARCHAR(50) NOT NULL,
+postgres(#     last_name VARCHAR(50) NOT NULL,
+postgres(#     email VARCHAR(100) UNIQUE NOT NULL,
+postgres(#     faculty VARCHAR(100)
+postgres(# );
+CREATE TABLE
+postgres=# INSERT INTO students (first_name, last_name, email, faculty)
+postgres-# VALUES
+postgres-#     ('Alymbek', 'Toktorov', 'alymbek@example.com', 'COM-25'),
+postgres-#     ('Timur', 'Isakov', 'timur@example.com', 'MED'),
+postgres-#     ('Beka', 'Sadykov', 'beka@example.com', 'MAT');
+INSERT 0 3
+postgres=# ALTER TABLE students ADD COLUMN birth_date DATE;
+ALTER TABLE
+postgres=# ALTER TABLE students DROP COLUMN faculty;
+ALTER TABLE
+postgres=# ALTER TABLE students ALTER COLUMN email TYPE TEXT;
+ALTER TABLE
+postgres=# ALTER TABLE students ADD CONSTRAINT chk_name CHECK (char_length(first_name) > 1);
+ALTER TABLE
+postgres=# ALTER TABLE students RENAME COLUMN birth_date TO dob;
+ALTER TABLE
+postgres=# CREATE TEMP TABLE temp_students (
+postgres(#     id SERIAL,
+postgres(#     name VARCHAR(50),
+postgres(#     grade INT CHECK (grade >= 0 AND grade <= 100)
+postgres(# );
+CREATE TABLE
+postgres=# \d students
+                                         Table "public.students"
+   Column   |         Type          | Collation | Nullable |                   Default
+
+------------+-----------------------+-----------+----------+---------------------------------------------
+-
+ student_id | integer               |           | not null | nextval('students_student_id_seq'::regclass)
+ first_name | character varying(50) |           | not null |
+ last_name  | character varying(50) |           | not null |
+ email      | text                  |           | not null |
+ dob        | date                  |           |          |
+Indexes:
+    "students_pkey" PRIMARY KEY, btree (student_id)
+    "students_email_key" UNIQUE CONSTRAINT, btree (email)
+Check constraints:
+    "chk_name" CHECK (char_length(first_name::text) > 1)
+
+
+postgres=# DROP TABLE IF EXISTS students;
+DROP TABLE
+postgres=# \d students
+Did not find any relation named "students".
+postgres=#
