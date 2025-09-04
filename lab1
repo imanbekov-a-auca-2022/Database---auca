@@ -1,0 +1,94 @@
+C:\Program Files\PostgreSQL\17\pgAdmin 4\runtime>"C:\Program Files\PostgreSQL\17\pgAdmin 4\runtime\psql.e
+xe" "host=localhost port=5432 dbname=postgres user=postgres sslmode=prefer connect_timeout=10" 2>>&1
+psql (17.6)
+WARNING: Console code page (866) differs from Windows code page (1251)
+         8-bit characters might not work correctly. See psql reference
+         page "Notes for Windows users" for details.
+Type "help" for help.
+
+postgres=# psql -h localhost -p 5432 -U postgres
+postgres-# \l
+                                                             List of databases
+   Name    |  Owner   | Encoding | Locale Provider |       Collate       |        Ctype        | Locale |
+ ICU Rules |   Access privileges
+-----------+----------+----------+-----------------+---------------------+---------------------+--------+
+-----------+-----------------------
+ postgres  | postgres | UTF8     | libc            | Russian_Russia.1251 | Russian_Russia.1251 |        |
+           |
+ template0 | postgres | UTF8     | libc            | Russian_Russia.1251 | Russian_Russia.1251 |        |
+           | =c/postgres          +
+           |          |          |                 |                     |                     |        |
+           | postgres=CTc/postgres
+ template1 | postgres | UTF8     | libc            | Russian_Russia.1251 | Russian_Russia.1251 |        |
+           | =c/postgres          +
+           |          |          |                 |                     |                     |        |
+           | postgres=CTc/postgres
+(3 rows)
+
+
+postgres-# CREATE DATABASE mydb;
+ОШИБКА:  ошибка синтаксиса (примерное положение: "psql")
+LINE 1: psql -h localhost -p 5432 -U postgres
+        ^
+postgres=# CREATE DATABASE mydb;
+CREATE DATABASE
+postgres=# \c mydb
+You are now connected to database "mydb" as user "postgres".
+mydb=# \dt
+Did not find any relations.
+mydb=# CREATE TABLE students (
+mydb(#     id SERIAL PRIMARY KEY,
+mydb(#     name VARCHAR(100),
+mydb(#     age INT
+mydb(# );
+CREATE TABLE
+mydb=# INSERT INTO students (name, age)
+mydb-# VALUES
+mydb-#     ('Alice', 21),
+mydb-#     ('Bob', 23);
+INSERT 0 2
+mydb=# SELECT * FROM students;
+ id | name  | age
+----+-------+-----
+  1 | Alice |  21
+  2 | Bob   |  23
+(2 rows)
+
+
+mydb=# \d students
+                                    Table "public.students"
+ Column |          Type          | Collation | Nullable |               Default
+--------+------------------------+-----------+----------+--------------------------------------
+ id     | integer                |           | not null | nextval('students_id_seq'::regclass)
+ name   | character varying(100) |           |          |
+ age    | integer                |           |          |
+Indexes:
+    "students_pkey" PRIMARY KEY, btree (id)
+
+
+mydb=# DROP TABLE students;
+DROP TABLE
+mydb=# \d students
+Did not find any relation named "students".
+mydb=# CREATE TABLE students (
+mydb(#     id SERIAL PRIMARY KEY,
+mydb(#     name VARCHAR(100),
+mydb(#     age INT
+mydb(# );
+CREATE TABLE
+mydb=# INSERT INTO students (name, age)
+mydb-# VALUES
+mydb-#     ('Alice', 21),
+mydb-#     ('Bob', 23);
+INSERT 0 2
+mydb=# SELECT * FROM students;
+ id | name  | age
+----+-------+-----
+  1 | Alice |  21
+  2 | Bob   |  23
+(2 rows)
+
+
+mydb=# DROP TABLE students;
+DROP TABLE
+mydb=# \q
