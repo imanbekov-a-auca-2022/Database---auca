@@ -1,0 +1,108 @@
+C:\Program Files\PostgreSQL\17\pgAdmin 4\runtime>"C:\Program Files\PostgreSQL\17\pgAdmin 4\runtime\psql.e
+xe" "host=localhost port=5432 dbname=postgres user=postgres sslmode=prefer connect_timeout=10" 2>>&1
+psql (17.6)
+WARNING: Console code page (866) differs from Windows code page (1251)
+         8-bit characters might not work correctly. See psql reference
+         page "Notes for Windows users" for details.
+Type "help" for help.
+
+postgres=# psql -U postgres
+postgres-# \l
+                                                             List of databases
+   Name    |  Owner   | Encoding | Locale Provider |       Collate       |        Ctype        | Locale |
+ ICU Rules |   Access privileges
+-----------+----------+----------+-----------------+---------------------+---------------------+--------+
+-----------+-----------------------
+ labdb     | postgres | UTF8     | libc            | Russian_Russia.1251 | Russian_Russia.1251 |        |
+           |
+ mydb      | postgres | UTF8     | libc            | Russian_Russia.1251 | Russian_Russia.1251 |        |
+           |
+ postgres  | postgres | UTF8     | libc            | Russian_Russia.1251 | Russian_Russia.1251 |        |
+           |
+ template0 | postgres | UTF8     | libc            | Russian_Russia.1251 | Russian_Russia.1251 |        |
+           | =c/postgres          +
+           |          |          |                 |                     |                     |        |
+           | postgres=CTc/postgres
+ template1 | postgres | UTF8     | libc            | Russian_Russia.1251 | Russian_Russia.1251 |        |
+           | =c/postgres          +
+           |          |          |                 |                     |                     |        |
+           | postgres=CTc/postgres
+(5 rows)
+
+
+postgres-# CREATE DATABASE university;
+ОШИБКА:  ошибка синтаксиса (примерное положение: "psql")
+LINE 1: psql -U postgres
+        ^
+postgres=# psql
+postgres-# CREATE DATABASE university;
+ОШИБКА:  ошибка синтаксиса (примерное положение: "psql")
+LINE 1: psql
+        ^
+postgres=# CREATE DATABASE university;
+CREATE DATABASE
+postgres=# \l
+                                                              List of databases
+    Name    |  Owner   | Encoding | Locale Provider |       Collate       |        Ctype        | Locale
+| ICU Rules |   Access privileges
+------------+----------+----------+-----------------+---------------------+---------------------+--------
++-----------+-----------------------
+ labdb      | postgres | UTF8     | libc            | Russian_Russia.1251 | Russian_Russia.1251 |
+|           |
+ mydb       | postgres | UTF8     | libc            | Russian_Russia.1251 | Russian_Russia.1251 |
+|           |
+ postgres   | postgres | UTF8     | libc            | Russian_Russia.1251 | Russian_Russia.1251 |
+|           |
+ template0  | postgres | UTF8     | libc            | Russian_Russia.1251 | Russian_Russia.1251 |
+|           | =c/postgres          +
+            |          |          |                 |                     |                     |
+|           | postgres=CTc/postgres
+ template1  | postgres | UTF8     | libc            | Russian_Russia.1251 | Russian_Russia.1251 |
+|           | =c/postgres          +
+            |          |          |                 |                     |                     |
+|           | postgres=CTc/postgres
+ university | postgres | UTF8     | libc            | Russian_Russia.1251 | Russian_Russia.1251 |
+|           |
+(6 rows)
+
+
+postgres=# \c university
+You are now connected to database "university" as user "postgres".
+university=# CREATE DATABASE student_records;
+CREATE DATABASE
+university=# \c student_records
+You are now connected to database "student_records" as user "postgres".
+student_records=# \c postgres
+You are now connected to database "postgres" as user "postgres".
+postgres=# DROP DATABASE student_records;
+DROP DATABASE
+postgres=# \l
+                                                              List of databases
+    Name    |  Owner   | Encoding | Locale Provider |       Collate       |        Ctype        | Locale
+| ICU Rules |   Access privileges
+------------+----------+----------+-----------------+---------------------+---------------------+--------
++-----------+-----------------------
+ labdb      | postgres | UTF8     | libc            | Russian_Russia.1251 | Russian_Russia.1251 |
+|           |
+ mydb       | postgres | UTF8     | libc            | Russian_Russia.1251 | Russian_Russia.1251 |
+|           |
+ postgres   | postgres | UTF8     | libc            | Russian_Russia.1251 | Russian_Russia.1251 |
+|           |
+ template0  | postgres | UTF8     | libc            | Russian_Russia.1251 | Russian_Russia.1251 |
+|           | =c/postgres          +
+            |          |          |                 |                     |                     |
+|           | postgres=CTc/postgres
+ template1  | postgres | UTF8     | libc            | Russian_Russia.1251 | Russian_Russia.1251 |
+|           | =c/postgres          +
+            |          |          |                 |                     |                     |
+|           | postgres=CTc/postgres
+ university | postgres | UTF8     | libc            | Russian_Russia.1251 | Russian_Russia.1251 |
+|           |
+(6 rows)
+
+
+postgres=# \c postgres
+You are now connected to database "postgres" as user "postgres".
+postgres=# DROP DATABASE university;
+DROP DATABASE
+postgres=#
