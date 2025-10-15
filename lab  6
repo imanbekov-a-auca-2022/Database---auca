@@ -1,0 +1,54 @@
+C:\Program Files\PostgreSQL\17\pgAdmin 4\runtime>"C:\Program Files\PostgreSQL\17\pgAdmin 4\runtime\psql.e
+xe" "host=localhost port=5432 dbname=postgres user=postgres sslmode=prefer connect_timeout=10" 2>>&1
+psql (17.6)
+WARNING: Console code page (866) differs from Windows code page (1251)
+         8-bit characters might not work correctly. See psql reference
+         page "Notes for Windows users" for details.
+Type "help" for help.
+
+postgres=# CREATE TABLE students (
+    student_id SERIAL PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    faculty VARCHAR(100)
+);
+ERROR:  relation "students" already exists
+postgres=# DROP TABLE students;
+DROP TABLE
+postgres=# CREATE TABLE students (
+    student_id SERIAL PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    faculty VARCHAR(100)
+);
+CREATE TABLE
+postgres=# DROP TABLE IF EXISTS students;
+DROP TABLE
+postgres=# CREATE TABLE students (
+    student_id SERIAL PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    faculty VARCHAR(100)
+);
+CREATE TABLE
+postgres=# ALTER TABLE students ADD COLUMN date_of_birth DATE;
+ALTER TABLE
+postgres=# ALTER TABLE students RENAME TO university_students;
+ALTER TABLE
+postgres=# ALTER TABLE students DROP COLUMN faculty;
+ERROR:  relation "students" does not exist
+postgres=# ALTER TABLE university_students DROP COLUMN faculty;
+ALTER TABLE
+postgres=# ALTER TABLE university_students ADD CONSTRAINT unique_student_email UNIQUE (email);
+ALTER TABLE
+postgres=# ALTER TABLE university_students RENAME COLUMN email TO email_address;
+ALTER TABLE
+postgres=# CREATE TEMP TABLE temp_table_name (
+  id   INT,
+  note TEXT
+);
+CREATE TABLE
+postgres=# \q
