@@ -27,7 +27,7 @@ Data Import/Export and Backup
 To review or execute the scripts:
 
 Clone the Repository:
-git clone [https://github.com/Atai-D/database_labs.git](https://github.com/Atai-D/database_labs.git)
+git clone [https://https://github.com/imanbekov-a-auca-2022/Database---auca)
 Ensure you have PostgreSQL installed locally.
 Use a client tool like pgAdmin or psql to connect to your database and run the individual .sql scripts found within the lab folders.
 👤 Author
